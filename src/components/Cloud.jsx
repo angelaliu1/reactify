@@ -1,39 +1,59 @@
 import React from 'react';
 import { render } from 'react-dom';
 import WordCloud from 'react-d3-cloud';
+import sw from 'stopword';
 
 class Cloud extends React.Component {
   constructor(props) {
     super(props);
-    var lyrics = this.props.lyrics.split(" ");
-    console.log(lyrics);
-    var arr = [];
-    for (var x = 0; x < lyrics.length; x++) {
-      var word = lyrics[x];
-      var found = false;
-      for(var i = 0; i < arr.length; i++) {
-        if (arr[i].text === word) {
-          found = true;
-          arr[i].value = arr[i].value + 1;
-          break;
-        }
-      }
-      if (!found) {
-        arr = arr.concat([{text:word, value: 1}])
-      }
-    }
-    console.log(arr);
-    this.state = {data: arr,
+    this.addToCloud = this.addToCloud.bind(this)
+    this.state = {
+      data: [],
       fontSizeMapper: word => Math.log2(word.value*200) * 5,
-      rotate: word => 0}
+      rotate: word => 0
+    }
   }
 
+  componentDidUpdate(prevProps){
+    if (this.props.allLyrics !== prevProps.allLyrics) {
+      this.addToCloud(this.props.allLyrics);
+    }
+  }
+
+  addToCloud(allLyrics) {
+    let newData = [];
+
+    Object.keys(allLyrics).forEach((id) => {
+      let lyrics = allLyrics[id];
+      lyrics = lyrics.split(" ");
+      lyrics = sw.removeStopwords(lyrics);
+      console.log(lyrics);
+
+      lyrics.forEach(word => {
+        var found = false;
+        for(var i = 0; i < newData.length; i++) {
+          if (newData[i].text === word) {
+            found = true;
+            newData[i].value = newData[i].value + 1;
+            break;
+          }
+        }
+        if (!found) {
+          newData = newData.concat([{text:word, value: 1}])
+        }
+      })
+      this.setState({data: newData})
+    })
+
+    console.log(this.state.data);
+  }
 
   render() {
-    return (<WordCloud
-      data={this.state.data}
-      fontSizeMapper={this.state.fontSizeMapper}
-      rotate={this.state.rotate}
+    return (
+      <WordCloud
+        data={this.state.data}
+        fontSizeMapper={this.state.fontSizeMapper}
+        rotate={this.state.rotate}
       />
     );
   }

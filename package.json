@@ -8,7 +8,8 @@
     "react-d3-cloud": "^0.7.0",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
-    "spotify-web-api-js": "^1.2.0"
+    "spotify-web-api-js": "^1.2.0",
+    "stopword": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,5 +31,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }

@@ -1,46 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Spotify from 'spotify-web-api-js';
-import Song from './Song.jsx'
+import Song from './components/Song'
+import Playlist from './components/Playlist'
+import Cloud from './components/Cloud'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.updateCloud = this.updateCloud.bind(this);
     this.state = {
+      lyrics: {},
       authenticated: false,
       devices: [],
       songs: [],
       search: "",
-      currentDevice: ""
+      currentDevice: "",
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async componentDidMount() {
-      if (window.location.hash) {
-        // Remove the "#"
-        const queryString = window.location.hash.substring(1);
-        // Parse the access_token out
-        const accessToken = new URLSearchParams(queryString).get("access_token");
-        this.spotifyClient = new Spotify();
-        this.spotifyClient.setAccessToken(accessToken);
+  // async componentDidMount() {
+  //   if (window.location.hash) {
+  //     // Remove the "#"
+  //     const queryString = window.location.hash.substring(1);
+  //     // Parse the access_token out
+  //     const accessToken = new URLSearchParams(queryString).get("access_token");
+  //     this.spotifyClient = new Spotify();
+  //     this.spotifyClient.setAccessToken(accessToken);
+  //
+  //     const { devices } = await this.spotifyClient.getMyDevices();
+  //     // const devices = Object.keys(devicesResp).map(key => devicesResp[key]);
+  //     this.setState({
+  //       authenticated: true,
+  //       devices,
+  //       currentDevice: devices[0].id
+  //     });
+  //   }
+  // }
 
-        const { devices } = await this.spotifyClient.getMyDevices();
-        // const devices = Object.keys(devicesResp).map(key => devicesResp[key]);
-        this.setState({
-          authenticated: true,
-          devices,
-          currentDevice: devices[0].id
-        });
-      }
-    }
-
-    async startPlayback(songId) {
+  async startPlayback(songId) {
     await this.spotifyClient.play({
       device_id: this.state.currentDevice,
       uris: [`spotify:track:${songId}`]
     });
   }
+
   async onSubmit(ev) {
     ev.preventDefault();
     const {
@@ -51,17 +56,25 @@ class App extends React.Component {
     this.setState({ songs });
   }
 
+  updateCloud(allLyrics) {
+    this.setState({lyrics: allLyrics})
+  }
+
   render() {
     if (!this.state.authenticated) {
       return (
-        <a
-          href={`https://accounts.spotify.com/authorize/?client_id=ac9ec319b658424d8aa1e41317e7c70f&response_type=token&redirect_uri=${window
-            .location.origin +
-            window.location
-              .pathname}&scope=user-read-playback-state user-modify-playback-state user-top-read user-read-private`}
-        >
+        <div className="App">
+          <a
+            href={`https://accounts.spotify.com/authorize/?client_id=ac9ec319b658424d8aa1e41317e7c70f&response_type=token&redirect_uri=${window
+              .location.origin +
+              window.location
+                .pathname}&scope=user-read-playback-state user-modify-playback-state user-top-read user-read-private`}
+          >
           Login with Spotify
-        </a>
+          </a>
+          <Cloud allLyrics={this.state.lyrics}/>
+          <Playlist onUpdateCloud={this.updateCloud}/>
+        </div>
       );
     }
     return (
