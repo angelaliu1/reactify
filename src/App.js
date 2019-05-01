@@ -14,30 +14,34 @@ class App extends React.Component {
       authenticated: false,
       devices: [],
       songs: [],
+      playlist_songs: [],
       search: "",
       currentDevice: "",
     };
+    this.playlist = React.createRef();
     this.onSubmit = this.onSubmit.bind(this);
   }
+ handleAddToPlaylist = (song) => {
+   this.playlist.current.addSong(song)
+ }
+  async componentDidMount() {
+    if (window.location.hash) {
+      // Remove the "#"
+      const queryString = window.location.hash.substring(1);
+      // Parse the access_token out
+      const accessToken = new URLSearchParams(queryString).get("access_token");
+      this.spotifyClient = new Spotify();
+      this.spotifyClient.setAccessToken(accessToken);
 
-  // async componentDidMount() {
-  //   if (window.location.hash) {
-  //     // Remove the "#"
-  //     const queryString = window.location.hash.substring(1);
-  //     // Parse the access_token out
-  //     const accessToken = new URLSearchParams(queryString).get("access_token");
-  //     this.spotifyClient = new Spotify();
-  //     this.spotifyClient.setAccessToken(accessToken);
-  //
-  //     const { devices } = await this.spotifyClient.getMyDevices();
-  //     // const devices = Object.keys(devicesResp).map(key => devicesResp[key]);
-  //     this.setState({
-  //       authenticated: true,
-  //       devices,
-  //       currentDevice: devices[0].id
-  //     });
-  //   }
-  // }
+      const { devices } = await this.spotifyClient.getMyDevices();
+      // const devices = Object.keys(devicesResp).map(key => devicesResp[key]);
+      this.setState({
+        authenticated: true,
+        devices,
+        currentDevice: devices[0].id
+      });
+    }
+  }
 
   async startPlayback(songId) {
     await this.spotifyClient.play({
@@ -60,12 +64,13 @@ class App extends React.Component {
     this.setState({lyrics: allLyrics})
   }
 
+
   render() {
     if (!this.state.authenticated) {
       return (
         <div className="App">
           <a
-            href={`https://accounts.spotify.com/authorize/?client_id=ac9ec319b658424d8aa1e41317e7c70f&response_type=token&redirect_uri=${window
+            href={`https://accounts.spotify.com/authorize/?client_id=238a016a9f704aa7ad170f9a5b85c8bb&response_type=token&redirect_uri=${window
               .location.origin +
               window.location
                 .pathname}&scope=user-read-playback-state user-modify-playback-state user-top-read user-read-private`}
@@ -73,7 +78,7 @@ class App extends React.Component {
           Login with Spotify
           </a>
           <Cloud allLyrics={this.state.lyrics}/>
-          <Playlist onUpdateCloud={this.updateCloud}/>
+          <Playlist songs={this.state.playlist_songs} onUpdateCloud={this.updateCloud}/>
         </div>
       );
     }
@@ -88,9 +93,12 @@ class App extends React.Component {
         </form>
         <div class="ui divided items">
           {this.state.songs.map(song => (
-            <Song url={song.album.images[0].url} name={song.name} artists={song.artists.map(artist => artist.name).join(", ")} />
+            <Song url={song.album.images[0].url} name={song.name} artists={song.artists.map(artist => artist.name).join(", ")}
+            onAddToPlaylist={e => this.handleAddToPlaylist(song)}/>
           ))}
         </div>
+        <Cloud allLyrics={this.state.lyrics}/>
+        {<Playlist ref={this.playlist} songs={this.state.playlist_songs} onUpdateCloud={this.updateCloud}/>}
         <select
           className="ui dropdown"
           onChange={e => this.setState({ currentDevice: e.target.value })}

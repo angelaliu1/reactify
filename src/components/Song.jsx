@@ -17,7 +17,7 @@ class Song extends React.Component {
             <p></p>
           </div>
           <div class="extra">
-            <div class="ui right floated primary button" onClick={() => this.props.onAddToPlaylist()}>
+            <div class="ui right floated primary button" onClick={(song) => this.props.onAddToPlaylist(song)}>
               Add to Playlist
               <i class="right chevron icon"></i>
             </div>

@@ -12,10 +12,13 @@ class Playlist extends React.Component {
     this.fetchLyrics = this.fetchLyrics.bind(this);
     this.addToPlaylist = this.addToPlaylist.bind(this);
     this.state = {
-      allLyrics: {}
+      allLyrics: {},
+      songs: props.songs
     };
   }
-
+  addSong(song) {
+    this.setState( prevState => ({songs: [...this.state.songs, song]}))
+  }
   addToPlaylist() {
     this.fetchLyrics()
   }
@@ -39,8 +42,14 @@ class Playlist extends React.Component {
 
   render() {
     return (
+
       <div>
-        <Song onAddToPlaylist={this.addToPlaylist}/>
+        <div class="ui divided items">
+        {this.state.songs.map(song => (
+          <Song url={song.album.images[0].url} name={song.name}
+           artists={song.artists.map(artist => artist.name).join(", ")}  onAddToPlaylist={this.addToPlaylist}/>
+        ))}
+        </div>
         <button
           class="ui primary button"
           style={{ marginTop: "10px", width: "300px" }}
