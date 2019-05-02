@@ -32,9 +32,10 @@ class Cloud extends React.Component {
       if (song.id in this.state.allLyrics) {
         newLyrics[song.id] = this.state.allLyrics[song.id];
       } else {
+        let artist = song.artists[0].name
         let res = await fetch(
           PROXY_URL1 +
-            `https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=15953433&apikey=${LYRICS_API_KEY}`
+            `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_track=${song.name}&q_artist=${artist}&apikey=${LYRICS_API_KEY}`
         );
         let resText = await res.json();
         let lyrics = resText.message.body.lyrics.lyrics_body;
@@ -53,7 +54,7 @@ class Cloud extends React.Component {
 
   addToCloud(songs) {
     this.fetchLyrics(songs);
-
+    console.log(this.state.allLyrics);
     let newData = [];
 
     Object.keys(this.state.allLyrics).forEach((id) => {
