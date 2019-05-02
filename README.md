@@ -1,4 +1,38 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Reactify
+
+### Team Members:
+##### Sicen Luan  https://github.com/luansicen
+##### Duy Nguyen  https://github.com/dnguyenocc
+##### Ivo Siddarta https://github.com/ivo-siddarta
+##### Angela Liu https://github.com/angelaliu1
+
+### Prompt:
+Spotify Client
+
+### Abstract:
+Our app supports searching for songs and adding songs to playlist. It creates a visualization of the lyrics of songs that you have added to playlist by generating a word cloud. We use the spotify api for searching and playing songs and musixmatch api for finding lyrics. We also use a package “stopword” to filter out meaningless words in the lyrics. 
+
+### Components:
+Cloud: Fetches the lyrics and generates a word cloud according to how often a word shows up in the lyrics.
+Playlist: A container for added songs. Allows deleting songs.
+Song: Upon searching, display the search result: song title, album image and singer.
+AddedSongs: Songs that have been added to playlist.
+SearchResults: A wrapper to display all search results. 
+
+### Features:
+Search for songs and add to playlist
+Remove songs from playlist
+Generates a word cloud for all lyrics in playlist
+
+### Division of Labor:
+Sicen Luan: WordCloud library, Project writeup; 
+Angela Liu: Musixmatch lyrics API, Authentification; 
+Ivo Siddarta: Lo-Fi mockup UI, Bootstrap, Add/Remove Playlist; 
+Duy Nguyen: Spotify API, Search
+
+
+
+### This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). ###
 
 ## Available Scripts
 
@@ -67,37 +101,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-
-# Title: Reactify
-
-### Team Members:
-Sicen Luan
-Duy Nguyen
-Ivo Siddarta
-Angela Liu
-
-### Prompt:
-Spotify Client
-
-### Abstract:
-Our app supports searching for songs and adding songs to playlist. It creates a visualization of the lyrics of songs that you have added to playlist by generating a word cloud. We use the spotify api for searching and playing songs and musixmatch api for finding lyrics. We also use a package “stopword” to filter out meaningless words in the lyrics. 
-
-### Components:
-Cloud: Fetches the lyrics and generates a word cloud according to how often a word shows up in the lyrics.
-Playlist: A container for added songs. Allows deleting songs.
-Song: Upon searching, display the search result: song title, album image and singer.
-AddedSongs: Songs that have been added to playlist.
-SearchResults: A wrapper to display all search results. 
-
-### Features:
-Search for songs and add to playlist
-Remove songs from playlist
-Generates a word cloud for all lyrics in playlist
-
-### Division of Labor:
-Sicen Luan: WordCloud library, Project writeup
-Angela Liu: Musixmatch lyrics API, Authentification
-Ivo Siddarta: Lo-Fi mockup UI, Bootstrap, Add/Remove Playlist
-Duy Nguyen: Spotify API, Search
 
 
