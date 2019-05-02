@@ -17,7 +17,7 @@ class Playlist extends React.Component {
       songs: prevState.songs.filter(currSong => currSong.id != song.id)
     }));
   }
-  
+
   render() {
     return (
       <div>
@@ -37,7 +37,7 @@ class Playlist extends React.Component {
           style={{ marginTop: "10px", width: "300px" }}
           onClick={() => this.props.onUpdateCloud(this.state.songs)}
         >
-          Generate Cloud
+          Update Cloud
         </button>
       </div>
     );
