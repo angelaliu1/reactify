@@ -6,7 +6,7 @@ class Song extends React.Component {
       return (
         <div class="extra">
           <div
-            class="ui right floated primary button"
+            class="btn btn-outline-success my-2 my-sm-0"
             onClick={song => this.props.onAddToPlaylist(song)}
           >
             Add to Playlist

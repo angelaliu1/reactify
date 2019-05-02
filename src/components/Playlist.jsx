@@ -34,7 +34,7 @@ class Playlist extends React.Component {
           ))}
         </div>
         <button
-          class="ui primary button"
+          class="btn btn-light"
           style={{ marginTop: "10px", width: "300px" }}
           onClick={() => this.props.onUpdateCloud(this.state.songs)}
         >

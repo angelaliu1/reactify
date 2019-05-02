@@ -89,13 +89,27 @@ class App extends React.Component {
     }
     return (
       <div className="ui container">
-        <form className="ui form" onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            onChange={e => this.setState({ search: e.target.value })}
-          />
-          <input type="submit" value="Search" />
-        </form>
+        <nav class="navbar navbar-light bg-light justify-content-between">
+          <a class="navbar-brand">
+            <h2>Reactify</h2>
+          </a>
+          <form
+            className="form-inline"
+            onSubmit={this.onSubmit}
+            aria-label="Search"
+          >
+            <input
+              class="form-control mr-sm-1"
+              type="text"
+              placeholder="Search"
+              aria-label="Search"
+              onChange={e => this.setState({ search: e.target.value })}
+            />
+            <button class="btn btn-outline-primary" type="submit">
+              Find Song
+            </button>
+          </form>
+        </nav>
         <div class="ui divided items">
           {this.state.songs.map(song => (
             <Song
