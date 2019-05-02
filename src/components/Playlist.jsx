@@ -1,7 +1,5 @@
 import React from "react";
-import Song from "./Song";
-
-
+import AddedSong from "./AddedSong";
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -23,12 +21,11 @@ class Playlist extends React.Component {
       <div>
         <div class="ui divided items">
           {this.state.songs.map(song => (
-            <Song
+            <AddedSong
               url={song.album.images[0].url}
               name={song.name}
               artists={song.artists.map(artist => artist.name).join(", ")}
               onAddToPlaylist={this.addToPlaylist}
-              button={false}
               key={song.id}
             />
           ))}
