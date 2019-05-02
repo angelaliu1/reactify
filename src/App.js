@@ -79,11 +79,6 @@ class App extends React.Component {
           >
             Login with Spotify
           </a>
-          <Cloud songs={this.state.playlist_songs} />
-          <Playlist
-            songs={this.state.playlist_songs}
-            onUpdateCloud={this.updateCloud}
-          />
         </div>
       );
     }
