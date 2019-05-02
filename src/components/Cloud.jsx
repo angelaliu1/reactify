@@ -39,12 +39,9 @@ class Cloud extends React.Component {
           PROXY_URL1 +
             `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_track=${song.name}&q_artist=${artist}&apikey=${LYRICS_API_KEY}`
         );
-        if(res[0] === undefined) {
-          alert("The lyrics for this song weren't found!");
-          break;
-        }
         let resText = await res.json();
-        if (resText.message.body.lyrics === undefined) {
+        console.log(resText.message.body);
+        if (resText.message.body.length === 0) {
           alert("The lyrics for this song weren't found!");
           break;
         }
