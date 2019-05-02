@@ -1,9 +1,23 @@
 import React from "react";
 
 class Song extends React.Component {
+  handleButtonDisplay() {
+    if (this.props.button) {
+      return (
+        <div class="extra">
+          <div
+            class="ui right floated primary button"
+            onClick={song => this.props.onAddToPlaylist(song)}
+          >
+            Add to Playlist
+            <i class="right chevron icon" />
+          </div>
+        </div>
+      );
+    }
+  }
   render() {
     return (
-
       <div class="item">
         <div class="ui tiny image">
           <img src={this.props.url} />
@@ -14,17 +28,11 @@ class Song extends React.Component {
             <span class="cinema">{this.props.artists}</span>
           </div>
           <div class="description">
-            <p></p>
+            <p />
           </div>
-          <div class="extra">
-            <div class="ui right floated primary button" onClick={(song) => this.props.onAddToPlaylist(song)}>
-              Add to Playlist
-              <i class="right chevron icon"></i>
-            </div>
-          </div>
+          {this.handleButtonDisplay()}
         </div>
       </div>
-
     );
   }
 }

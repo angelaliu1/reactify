@@ -1,9 +1,9 @@
-import React from 'react';
-import './App.css';
-import Spotify from 'spotify-web-api-js';
-import Song from './components/Song'
-import Playlist from './components/Playlist'
-import Cloud from './components/Cloud'
+import React from "react";
+import "./App.css";
+import Spotify from "spotify-web-api-js";
+import Song from "./components/Song";
+import Playlist from "./components/Playlist";
+import Cloud from "./components/Cloud";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,14 +16,14 @@ class App extends React.Component {
       songs: [],
       playlist_songs: [],
       search: "",
-      currentDevice: "",
+      currentDevice: ""
     };
     this.playlist = React.createRef();
     this.onSubmit = this.onSubmit.bind(this);
   }
- handleAddToPlaylist = (song) => {
-   this.playlist.current.addSong(song)
- }
+  handleAddToPlaylist = song => {
+    this.playlist.current.addSong(song);
+  };
   async componentDidMount() {
     if (window.location.hash) {
       // Remove the "#"
@@ -61,9 +61,8 @@ class App extends React.Component {
   }
 
   updateCloud(allLyrics) {
-    this.setState({lyrics: allLyrics})
+    this.setState({ lyrics: allLyrics });
   }
-
 
   render() {
     if (!this.state.authenticated) {
@@ -75,10 +74,13 @@ class App extends React.Component {
               window.location
                 .pathname}&scope=user-read-playback-state user-modify-playback-state user-top-read user-read-private`}
           >
-          Login with Spotify
+            Login with Spotify
           </a>
-          <Cloud allLyrics={this.state.lyrics}/>
-          <Playlist songs={this.state.playlist_songs} onUpdateCloud={this.updateCloud}/>
+          <Cloud allLyrics={this.state.lyrics} />
+          <Playlist
+            songs={this.state.playlist_songs}
+            onUpdateCloud={this.updateCloud}
+          />
         </div>
       );
     }
@@ -93,12 +95,23 @@ class App extends React.Component {
         </form>
         <div class="ui divided items">
           {this.state.songs.map(song => (
-            <Song url={song.album.images[0].url} name={song.name} artists={song.artists.map(artist => artist.name).join(", ")}
-            onAddToPlaylist={e => this.handleAddToPlaylist(song)}/>
+            <Song
+              url={song.album.images[0].url}
+              name={song.name}
+              artists={song.artists.map(artist => artist.name).join(", ")}
+              onAddToPlaylist={e => this.handleAddToPlaylist(song)}
+              button
+            />
           ))}
         </div>
-        <Cloud allLyrics={this.state.lyrics}/>
-        {<Playlist ref={this.playlist} songs={this.state.playlist_songs} onUpdateCloud={this.updateCloud}/>}
+        <Cloud allLyrics={this.state.lyrics} />
+        {
+          <Playlist
+            ref={this.playlist}
+            songs={this.state.playlist_songs}
+            onUpdateCloud={this.updateCloud}
+          />
+        }
         <select
           className="ui dropdown"
           onChange={e => this.setState({ currentDevice: e.target.value })}
@@ -111,6 +124,5 @@ class App extends React.Component {
     );
   }
 }
-
 
 export default App;
