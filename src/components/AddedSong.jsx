@@ -17,11 +17,10 @@ class Song extends React.Component {
           </div>
           <div class="extra">
             <div
-              class="btn btn-outline-success my-2 my-sm-0"
+              class="btn btn-outline-danger my-2 my-sm-0"
               onClick={song => this.props.onAddToPlaylist(song)}
             >
-              Add to Playlist
-              <i class="right chevron icon" />
+              X
             </div>
           </div>
         </div>
