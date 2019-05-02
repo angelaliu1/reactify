@@ -53,7 +53,7 @@ class Cloud extends React.Component {
 
   addToCloud(songs) {
     this.fetchLyrics(songs);
-
+    console.log(this.state.allLyrics);
     let newData = [];
 
     Object.keys(this.state.allLyrics).forEach((id) => {
