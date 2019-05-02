@@ -4,6 +4,7 @@ import Spotify from "spotify-web-api-js";
 import Song from "./components/Song";
 import Playlist from "./components/Playlist";
 import Cloud from "./components/Cloud";
+import SearchBar from "./components/SearchBar";
 
 class App extends React.Component {
   constructor(props) {
@@ -67,6 +68,9 @@ class App extends React.Component {
     this.setState({playlist_songs: songs});
   }
 
+  doUpdate(e) {
+    this.setState({search: e.target.value});
+  }
   render() {
     if (!this.state.authenticated) {
       const client_id = '238a016a9f704aa7ad170f9a5b85c8bb';
@@ -84,27 +88,7 @@ class App extends React.Component {
     }
     return (
       <div className="ui container">
-        <nav class="navbar navbar-light bg-light justify-content-between">
-          <a class="navbar-brand">
-            <h2>Reactify</h2>
-          </a>
-          <form
-            className="form-inline"
-            onSubmit={this.onSubmit}
-            aria-label="Search"
-          >
-            <input
-              class="form-control mr-sm-1"
-              type="text"
-              placeholder="Search"
-              aria-label="Search"
-              onChange={e => this.setState({ search: e.target.value })}
-            />
-            <button class="btn btn-outline-primary" type="submit">
-              Find Song
-            </button>
-          </form>
-        </nav>
+        <SearchBar onSubmit={this.onSubmit.bind(this)} doSetState={this.doUpdate.bind(this)} />
         <div class="ui divided items">
           {this.state.songs.map(song => (
             <Song
