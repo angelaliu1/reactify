@@ -21,9 +21,11 @@ class App extends React.Component {
     this.playlist = React.createRef();
     this.onSubmit = this.onSubmit.bind(this);
   }
- handleAddToPlaylist = (song) => {
-   this.playlist.current.addSong(song)
- }
+
+  handleAddToPlaylist = (song) => {
+    this.playlist.current.addSong(song)
+  }
+
   async componentDidMount() {
     if (window.location.hash) {
       // Remove the "#"
@@ -34,6 +36,7 @@ class App extends React.Component {
       this.spotifyClient.setAccessToken(accessToken);
 
       const { devices } = await this.spotifyClient.getMyDevices();
+      console.log(devices);
       // const devices = Object.keys(devicesResp).map(key => devicesResp[key]);
       this.setState({
         authenticated: true,
@@ -67,13 +70,15 @@ class App extends React.Component {
 
   render() {
     if (!this.state.authenticated) {
+      const client_id = '238a016a9f704aa7ad170f9a5b85c8bb';
+      const scopes = 'user-read-playback-state user-modify-playback-state user-top-read user-read-private user-library-read playlist-read-private'
       return (
         <div className="App">
           <a
-            href={`https://accounts.spotify.com/authorize/?client_id=238a016a9f704aa7ad170f9a5b85c8bb&response_type=token&redirect_uri=${window
+            href={`https://accounts.spotify.com/authorize/?client_id=${client_id}&response_type=token&redirect_uri=${window
               .location.origin +
               window.location
-                .pathname}&scope=user-read-playback-state user-modify-playback-state user-top-read user-read-private`}
+                .pathname}&scope=${scopes}`}
           >
           Login with Spotify
           </a>
