@@ -16,7 +16,8 @@ class Cloud extends React.Component {
     this.state = {
       allLyrics: {}, // for all songs in playlist, maps spotify song.id to string of lyrics
       data: [],
-      fontSizeMapper: word => Math.log2(word.value*200) * 5,
+      //fontSizeMapper: word => Math.log2(word.value*200) * 5,
+      fontSizeMapper: word => (1 + word.value) * 10,
       rotate: word => 0
     }
   }
