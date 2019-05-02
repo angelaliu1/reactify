@@ -37,7 +37,6 @@ class App extends React.Component {
       this.spotifyClient.setAccessToken(accessToken);
 
       const { devices } = await this.spotifyClient.getMyDevices();
-      console.log(devices);
       // const devices = Object.keys(devicesResp).map(key => devicesResp[key]);
       this.setState({
         authenticated: true,
