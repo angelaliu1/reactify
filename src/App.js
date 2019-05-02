@@ -10,7 +10,6 @@ class App extends React.Component {
     super(props);
     this.updateCloud = this.updateCloud.bind(this);
     this.state = {
-      lyrics: {},
       authenticated: false,
       devices: [],
       songs: [],
@@ -22,8 +21,9 @@ class App extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleAddToPlaylist = (song) => {
+  handleAddToPlaylist(song) {
     this.playlist.current.addSong(song)
+    this.setState(prevState => ({playlist_songs: prevState.playlist_songs.concat(song)}));
   }
 
   async componentDidMount() {
@@ -75,13 +75,11 @@ class App extends React.Component {
         <div className="App">
           <a
             href={`https://accounts.spotify.com/authorize/?client_id=${client_id}&response_type=token&redirect_uri=${window
-              .location.origin +
-              window.location
-                .pathname}&scope=${scopes}`}
+              .location.origin + window.location.pathname}&scope=${scopes}`}
           >
             Login with Spotify
           </a>
-          <Cloud allLyrics={this.state.lyrics} />
+          <Cloud songs={this.state.playlist_songs} />
           <Playlist
             songs={this.state.playlist_songs}
             onUpdateCloud={this.updateCloud}
@@ -106,10 +104,11 @@ class App extends React.Component {
               artists={song.artists.map(artist => artist.name).join(", ")}
               onAddToPlaylist={e => this.handleAddToPlaylist(song)}
               button
+              key={song.id}
             />
           ))}
         </div>
-        <Cloud allLyrics={this.state.lyrics} />
+        <Cloud songs={this.state.playlist_songs} />
         {
           <Playlist
             ref={this.playlist}
