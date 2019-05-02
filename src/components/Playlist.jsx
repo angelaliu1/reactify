@@ -4,7 +4,6 @@ import AddedSong from "./AddedSong";
 class Playlist extends React.Component {
   constructor(props) {
     super(props);
-    // this.addToPlaylist = this.addToPlaylist.bind(this);
     this.state = {
       songs: props.songs
     };
@@ -12,9 +11,6 @@ class Playlist extends React.Component {
   addSong(song) {
     this.setState(prevState => ({ songs: [...this.state.songs, song] }));
   }
-  // addToPlaylist() {
-  //   this.fetchLyrics();
-  // }
 
   render() {
     return (

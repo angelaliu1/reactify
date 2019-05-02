@@ -63,8 +63,8 @@ class App extends React.Component {
     this.setState({ songs });
   }
 
-  updateCloud(allLyrics) {
-    this.setState({ lyrics: allLyrics });
+  updateCloud(songs) {
+    this.setState({playlist_songs: songs});
   }
 
   render() {
