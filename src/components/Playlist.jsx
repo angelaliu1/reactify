@@ -12,6 +12,11 @@ class Playlist extends React.Component {
   addSong(song) {
     this.setState(prevState => ({ songs: [...this.state.songs, song] }));
   }
+  deleteSong(song) {
+    this.setState(prevState => ({
+      songs: prevState.songs.filter(currSong => currSong.id != song.id)
+    }));
+  }
   // addToPlaylist() {
   //   this.fetchLyrics();
   // }
@@ -25,7 +30,7 @@ class Playlist extends React.Component {
               url={song.album.images[0].url}
               name={song.name}
               artists={song.artists.map(artist => artist.name).join(", ")}
-              onAddToPlaylist={this.addToPlaylist}
+              onDeleteFromPlaylist={() => this.deleteSong(song)}
               key={song.id}
             />
           ))}

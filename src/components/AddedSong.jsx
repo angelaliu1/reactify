@@ -18,7 +18,7 @@ class Song extends React.Component {
           <div class="extra">
             <div
               class="btn btn-outline-danger my-2 my-sm-0"
-              onClick={song => this.props.onAddToPlaylist(song)}
+              onClick={song => this.props.onDeleteFromPlaylist(song)}
             >
               X
             </div>
